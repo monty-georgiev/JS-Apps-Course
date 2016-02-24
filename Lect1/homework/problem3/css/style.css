@@ -1,0 +1,27 @@
+.table-holder {
+    max-width: 960px;
+    margin: 200px auto;
+    padding: 20px;
+    box-shadow: 1px 0 5px rgba(0, 0, 0, 0.25);
+}
+
+table {
+    border-spacing: 0;
+    border-collapse: separate;
+}
+
+th, td {
+    padding: 10px;
+}
+
+table, td, th {
+    border: 1px solid black;
+}
+
+td {
+    background-color: #f8f8f8;
+}
+
+thead {
+    background-color: greenyellow;
+}

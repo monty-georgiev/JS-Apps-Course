@@ -1,0 +1,1 @@
+!function($,r,n){function e(r,n){return $(r).before(n),this}function t(r,n){return $(r).after(n),this}var f=$("#anchor");t(f,"<p>After</p>"),e(f,"<p>Before</p>")}(jQuery,window);

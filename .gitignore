@@ -1,2 +1,14 @@
 
 *.codekit
+
+.idea/.name
+
+.idea/JS-Apps-Course.iml
+
+.idea/misc.xml
+
+.idea/modules.xml
+
+.idea/vcs.xml
+
+.idea/workspace.xml

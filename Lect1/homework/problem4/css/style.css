@@ -1,0 +1,18 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+ul {
+    list-style: none;
+}
+
+.main-wrapper {
+    max-width: 1020px;
+    margin: 0 auto;
+}
+
+.slideshow-holder {
+    margin-top: 150px;
+}

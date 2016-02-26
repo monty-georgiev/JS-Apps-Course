@@ -11,8 +11,49 @@ ul {
 .main-wrapper {
     max-width: 1020px;
     margin: 0 auto;
+    position: relative;
 }
 
 .slideshow-holder {
-    margin-top: 150px;
+    margin: 150px auto;
+    text-align: center;
+    width: 600px;
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+}
+
+.slideshow {
+    width: 2450px;
+    position: relative;
+}
+
+.slide {
+    display: inline-block;
+    width: 600px;
+    position: relative;
+}
+
+.arrow {
+    display: block;
+    width: 27px;
+    height: 42px;
+    position: absolute;
+    top: 50%;
+    transition: all .35s;
+    cursor: pointer;
+}
+
+.arrow:hover {
+    transform: scale(1.2);
+}
+
+.arrow-prev {
+    background-image: url("../img/arrow-prev.png");
+    left: 40px;
+}
+
+.arrow-next {
+    background-image: url("../img/arrow-next.png");
+    right: 40px;
 }

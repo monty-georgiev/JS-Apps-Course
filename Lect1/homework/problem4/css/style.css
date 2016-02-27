@@ -8,6 +8,10 @@ ul {
     list-style: none;
 }
 
+body {
+    background: #f4f4f4;
+}
+
 .main-wrapper {
     max-width: 1020px;
     margin: 0 auto;
@@ -31,7 +35,8 @@ ul {
 .slide {
     display: inline-block;
     width: 600px;
-    position: relative;
+    position: absolute;
+    opacity: 0;
 }
 
 .arrow {
@@ -56,4 +61,10 @@ ul {
 .arrow-next {
     background-image: url("../img/arrow-next.png");
     right: 40px;
+}
+
+.active {
+    left: 0;
+    opacity: 1;
+    transition: all .65s;
 }

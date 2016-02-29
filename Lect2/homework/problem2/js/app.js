@@ -3,47 +3,55 @@
 
     var questions = [
         {
-            title: 'Question one',
+            title: 'How far is the Moon?',
             answers: [
-                'answer1',
-                'answer2',
-                'answer3',
-                'answer3'
-            ]
+                '320,000 km',
+                '120,000 km',
+                '384,400 km',
+                '287,380 km'
+            ],
+            correct: 2
         },
         {
-            title: 'Question two',
+            title: 'What color is the snow?',
             answers: [
-                'answer1',
-                'answer2',
-                'answer3',
-                'answer3'
-            ]
+                'Red',
+                'Green',
+                'Blue',
+                'White'
+            ],
+            correct: 3
         }, {
-            title: 'Question three',
+            title: 'Which floor is Code Ground hall at?',
             answers: [
-                'answer1',
-                'answer2',
-                'answer3',
-                'answer3'
-            ]
+                'Ground floor',
+                'First floor',
+                'Second floor',
+                'Third floor'
+            ],
+            correct: 0
         }, {
-            title: 'Question four',
+            title: 'What is the legal drinking age in Bulgaria?',
             answers: [
-                'answer1',
-                'answer2',
-                'answer3',
-                'answer3'
-            ]
+                '16',
+                '8',
+                '18',
+                '21'
+            ],
+            correct: 2
         }
     ];
 
+    for (var q in questions) {
+        localStorage.setItem(q, JSON.stringify(questions[q]));
+    }
+    
 
-    var timer = setInterval(function () {
-        console.log('tick');
-    }, 1000);
 
-    console.log(questions)
+    //
+    //var timer = setInterval(function () {
+    //    console.log('tick');
+    //}, 1000);
 
 
 })(window);

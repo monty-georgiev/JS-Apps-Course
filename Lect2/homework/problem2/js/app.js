@@ -42,16 +42,53 @@
         }
     ];
 
+    var minutes = 5;
+    var timerRaw = minutes * 60;
+    var timer = setInterval(clockCountdown, 1000);
+    var timerContainer = document.getElementById('timer');
+    var questionsHolder = document.getElementById('questions-holder');
+
     for (var q in questions) {
         localStorage.setItem(q, JSON.stringify(questions[q]));
+        renderQuestions(questions[q]);
     }
-    
 
+    function clockCountdown() {
+        timerRaw--;
+        var minutesToDisplay = Math.floor(timerRaw / 60);
+        var secondsToDisplay = Math.floor(timerRaw % 60);
 
-    //
-    //var timer = setInterval(function () {
-    //    console.log('tick');
-    //}, 1000);
+        if (secondsToDisplay < 10) {
+            secondsToDisplay = "0" + secondsToDisplay;
+        }
+
+        timerContainer.innerText = minutesToDisplay + " : " + secondsToDisplay;
+
+        if (minutesToDisplay == 0 && secondsToDisplay == 0) {
+            clearInterval(timer);
+            timerContainer.innerText = "Time out";
+        }
+    }
+
+    function renderQuestions(question) {
+        var article = document.createElement('article');
+        article.classList.add('question');
+        var heading = document.createElement('h2');
+        heading.classList.add('question-title');
+        heading.innerText = question.title;
+        var ul = document.createElement('ul');
+
+        question.answers.forEach(function (answer) {
+            var li = document.createElement('li');
+            li.innerText = answer;
+            ul.appendChild(li);
+        });
+
+        article.appendChild(heading);
+        article.appendChild(ul);
+
+        questionsHolder.appendChild(article);
+    }
 
 
 })(window);

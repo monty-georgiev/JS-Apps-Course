@@ -2,3 +2,19 @@
     max-width: 960px;
     margin: 0 auto;
 }
+
+ul {
+    list-style: none;
+}
+
+.timer {
+    display: block;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+}
+
+.questions-holder {
+    padding: 20px;
+}

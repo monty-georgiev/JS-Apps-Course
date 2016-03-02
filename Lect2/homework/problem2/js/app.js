@@ -14,7 +14,7 @@
                 '287,380 km'
             ],
             correctAnswer: 2,
-            userAnswer: 5
+            userAnswer: false
         },
         {
             questionId: 2,
@@ -26,7 +26,7 @@
                 'White'
             ],
             correctAnswer: 3,
-            userAnswer: 5
+            userAnswer: false
         },
         {
             questionId: 3,
@@ -38,7 +38,7 @@
                 'Third floor'
             ],
             correctAnswer: 0,
-            userAnswer: 5
+            userAnswer: false
         },
         {
             questionId: 4,
@@ -50,7 +50,7 @@
                 '21'
             ],
             correctAnswer: 2,
-            userAnswer: 5
+            userAnswer: false
         }
     ];
 
@@ -107,19 +107,26 @@
         heading.classList.add('question-title');
         heading.innerText = question.title;
         var ul = document.createElement('ul');
+        var userAnswer = question.userAnswer;
+        var numberOfAnswers = question.answers.length;
 
-        question.answers.forEach(function (answer) {
+        for (var i = 0; i < numberOfAnswers; i++) {
             var li = document.createElement('li');
             var label = document.createElement('label');
             var input = document.createElement('input');
             input.setAttribute('type', 'radio');
-            input.setAttribute('name', question.questionId);
+            input.setAttribute('name', question.answers[i].questionId);
+
+            if (userAnswer && userAnswer == i) {
+                input.setAttribute('checked', true);
+            }
+
             label.appendChild(input);
-            var textAnswer = document.createTextNode(answer);
+            var textAnswer = document.createTextNode(question.answers[i]);
             label.appendChild(textAnswer);
             li.appendChild(label);
             ul.appendChild(li);
-        });
+        }
 
         article.appendChild(heading);
         article.appendChild(ul);
@@ -130,10 +137,7 @@
     function getAnswers() {
         var selectedAnswers = document.querySelectorAll('input:checked');
 
-        for (var ans in selectedAnswers) {
-            console.log(selectedAnswers[ans]);
-        }
-
+        //TODO: compare answers, edit local storage if answered;
     }
 
     window.onunload = function () {

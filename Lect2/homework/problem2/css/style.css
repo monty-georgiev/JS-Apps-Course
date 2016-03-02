@@ -22,7 +22,7 @@ ul {
 }
 
 .questions-holder {
-    padding: 20px;
+    padding: 20px 40px;
 }
 
 .question {
@@ -31,4 +31,9 @@ ul {
 
 input[type="radio"] {
     margin-right: 10px;
+}
+
+.btn {
+    display: block;
+    padding: 10px 20px;
 }

@@ -1,6 +1,8 @@
 ;
 (function (window, undefined) {
 
+
+    //Questions data (id,title,answers[],correctAnswer,userAnswer)
     var questions = [
         {
             questionId: 1,
@@ -11,7 +13,8 @@
                 '384,400 km',
                 '287,380 km'
             ],
-            correct: 2
+            correctAnswer: 2,
+            userAnswer: 5
         },
         {
             questionId: 2,
@@ -22,7 +25,8 @@
                 'Blue',
                 'White'
             ],
-            correct: 3
+            correctAnswer: 3,
+            userAnswer: 5
         },
         {
             questionId: 3,
@@ -33,7 +37,8 @@
                 'Second floor',
                 'Third floor'
             ],
-            correct: 0
+            correctAnswer: 0,
+            userAnswer: 5
         },
         {
             questionId: 4,
@@ -44,21 +49,39 @@
                 '18',
                 '21'
             ],
-            correct: 2
+            correctAnswer: 2,
+            userAnswer: 5
         }
     ];
 
+    //Set config variables and DOM elements
     var minutes = 5;
     var timerRaw = minutes * 60;
     var timer = setInterval(clockCountdown, 1000);
     var timerContainer = document.getElementById('timer');
     var questionsHolder = document.getElementById('questions-holder');
 
-    for (var q in questions) {
-        localStorage.setItem(q, JSON.stringify(questions[q]));
-        renderQuestions(questions[q]);
+    function initialize() {
+        for (var q in questions) {
+            localStorage.setItem(q, JSON.stringify(questions[q]));
+            renderQuestions(questions[q]);
+        }
+
+        renderButton();
     }
 
+    function renderButton() {
+        var button = document.createElement('button');
+        button.classList.add('btn');
+        button.innerText = "Submit";
+
+        button.addEventListener('click', getAnswers);
+
+        questionsHolder.appendChild(button);
+    }
+
+
+    //Timer countdown
     function clockCountdown() {
         timerRaw--;
         var minutesToDisplay = Math.floor(timerRaw / 60);
@@ -76,6 +99,7 @@
         }
     }
 
+    //Create li element with questions answers and radio buttons
     function renderQuestions(question) {
         var article = document.createElement('article');
         article.classList.add('question');
@@ -99,9 +123,23 @@
 
         article.appendChild(heading);
         article.appendChild(ul);
-
         questionsHolder.appendChild(article);
     }
 
+    //Find all answered questions
+    function getAnswers() {
+        var selectedAnswers = document.querySelectorAll('input:checked');
+
+        for (var ans in selectedAnswers) {
+            console.log(selectedAnswers[ans]);
+        }
+
+    }
+
+    window.onunload = function () {
+        getAnswers();
+    };
+
+    window.init = initialize;
 
 })(window);

@@ -3,6 +3,7 @@
 
     var questions = [
         {
+            questionId: 1,
             title: 'How far is the Moon?',
             answers: [
                 '320,000 km',
@@ -13,6 +14,7 @@
             correct: 2
         },
         {
+            questionId: 2,
             title: 'What color is the snow?',
             answers: [
                 'Red',
@@ -21,7 +23,9 @@
                 'White'
             ],
             correct: 3
-        }, {
+        },
+        {
+            questionId: 3,
             title: 'Which floor is Code Ground hall at?',
             answers: [
                 'Ground floor',
@@ -30,7 +34,9 @@
                 'Third floor'
             ],
             correct: 0
-        }, {
+        },
+        {
+            questionId: 4,
             title: 'What is the legal drinking age in Bulgaria?',
             answers: [
                 '16',
@@ -80,7 +86,14 @@
 
         question.answers.forEach(function (answer) {
             var li = document.createElement('li');
-            li.innerText = answer;
+            var label = document.createElement('label');
+            var input = document.createElement('input');
+            input.setAttribute('type', 'radio');
+            input.setAttribute('name', question.questionId);
+            label.appendChild(input);
+            var textAnswer = document.createTextNode(answer);
+            label.appendChild(textAnswer);
+            li.appendChild(label);
             ul.appendChild(li);
         });
 

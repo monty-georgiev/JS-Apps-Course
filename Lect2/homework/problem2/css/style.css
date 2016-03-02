@@ -1,3 +1,9 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 .main-wrapper {
     max-width: 960px;
     margin: 0 auto;
@@ -17,4 +23,12 @@ ul {
 
 .questions-holder {
     padding: 20px;
+}
+
+.question {
+    margin: 10px 0;
+}
+
+input[type="radio"] {
+    margin-right: 10px;
 }

@@ -6,7 +6,8 @@
 
 .main-wrapper {
     max-width: 960px;
-    margin: 0 auto;
+    margin: 50px auto;
+    box-shadow: 1px 0 5px rgba(0, 0, 0, 0.2);
 }
 
 ul {
@@ -48,4 +49,13 @@ input[type="radio"] {
 
 .btn:disabled:hover {
     background-color: #ccc;
+}
+
+.score-holder {
+    padding: 20px;
+}
+
+.score {
+    font-size: 24px;
+    padding-left: 20px;
 }

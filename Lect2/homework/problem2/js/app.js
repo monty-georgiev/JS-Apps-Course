@@ -57,9 +57,11 @@
     //Set config variables and DOM elements
     var minutes = 5;
     var timerRaw = minutes * 60;
+    localStorage.setItem('timer', timerRaw);
     var timer = setInterval(clockCountdown, 1000);
     var timerContainer = document.getElementById('timer');
     var questionsHolder = document.getElementById('questions-holder');
+    var scoreContainer = document.getElementById('score');
 
     function initialize() {
         for (var q in questions) {
@@ -82,6 +84,7 @@
 
     //Timer countdown
     function clockCountdown() {
+        var timerRaw = localStorage.getItem('timer');
         timerRaw--;
         var minutesToDisplay = Math.floor(timerRaw / 60);
         var secondsToDisplay = Math.floor(timerRaw % 60);
@@ -97,6 +100,7 @@
             timerContainer.innerText = "Time out";
             document.getElementById('btn').setAttribute('disabled', true);
         }
+        localStorage.setItem('timer', timerRaw);
     }
 
     //Create li element with questions answers and radio buttons
@@ -137,6 +141,7 @@
     //Find all answered questions
     function getAnswers() {
         var selectedAnswers = document.querySelectorAll('input:checked');
+        var score = 0;
 
         var answeredNumber = selectedAnswers.length;
         for (var i = 0; i < answeredNumber; i++) {
@@ -144,10 +149,14 @@
             var answerNumber = selectedAnswers[i].getAttribute('answer-number');
             var questionFromStorage = JSON.parse(localStorage.getItem(questionId));
             questionFromStorage.userAnswer = answerNumber;
+            if (questionFromStorage.userAnswer == questionFromStorage.correctAnswer) {
+                score++;
+            }
             localStorage.setItem(questionId, JSON.stringify(questionFromStorage));
         }
 
         clearInterval(timer);
+        scoreContainer.innerText = "You have " + score + " correct answers";
 
     }
 

@@ -5,7 +5,7 @@
     //Questions data (id,title,answers[],correctAnswer,userAnswer)
     var questions = [
         {
-            questionId: 1,
+            questionId: 0,
             title: 'How far is the Moon?',
             answers: [
                 '320,000 km',
@@ -17,7 +17,7 @@
             userAnswer: false
         },
         {
-            questionId: 2,
+            questionId: 1,
             title: 'What color is the snow?',
             answers: [
                 'Red',
@@ -29,7 +29,7 @@
             userAnswer: false
         },
         {
-            questionId: 3,
+            questionId: 2,
             title: 'Which floor is Code Ground hall at?',
             answers: [
                 'Ground floor',
@@ -41,7 +41,7 @@
             userAnswer: false
         },
         {
-            questionId: 4,
+            questionId: 3,
             title: 'What is the legal drinking age in Bulgaria?',
             answers: [
                 '16',
@@ -73,10 +73,9 @@
     function renderButton() {
         var button = document.createElement('button');
         button.classList.add('btn');
+        button.id = 'btn';
         button.innerText = "Submit";
-
         button.addEventListener('click', getAnswers);
-
         questionsHolder.appendChild(button);
     }
 
@@ -96,6 +95,7 @@
         if (minutesToDisplay == 0 && secondsToDisplay == 0) {
             clearInterval(timer);
             timerContainer.innerText = "Time out";
+            document.getElementById('btn').setAttribute('disabled', true);
         }
     }
 
@@ -115,9 +115,10 @@
             var label = document.createElement('label');
             var input = document.createElement('input');
             input.setAttribute('type', 'radio');
-            input.setAttribute('name', question.answers[i].questionId);
+            input.setAttribute('name', question.questionId);
+            input.setAttribute('answer-number', i);
 
-            if (userAnswer && userAnswer == i) {
+            if (userAnswer !== false) {
                 input.setAttribute('checked', true);
             }
 
@@ -137,12 +138,18 @@
     function getAnswers() {
         var selectedAnswers = document.querySelectorAll('input:checked');
 
-        //TODO: compare answers, edit local storage if answered;
-    }
+        var answeredNumber = selectedAnswers.length;
+        for (var i = 0; i < answeredNumber; i++) {
+            var questionId = selectedAnswers[i].name;
+            var answerNumber = selectedAnswers[i].getAttribute('answer-number');
+            var questionFromStorage = JSON.parse(localStorage.getItem(questionId));
+            questionFromStorage.userAnswer = answerNumber;
+            localStorage.setItem(questionId, JSON.stringify(questionFromStorage));
+        }
 
-    window.onunload = function () {
-        getAnswers();
-    };
+        clearInterval(timer);
+
+    }
 
     window.init = initialize;
 

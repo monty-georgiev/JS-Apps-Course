@@ -36,4 +36,16 @@ input[type="radio"] {
 .btn {
     display: block;
     padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    transition: all .25s;
+    background-color: #ccc;
+}
+
+.btn:hover {
+    background-color: #f4f4f4;
+}
+
+.btn:disabled:hover {
+    background-color: #ccc;
 }

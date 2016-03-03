@@ -20,6 +20,8 @@ ul {
     top: 20px;
     right: 20px;
     font-size: 24px;
+    font-weight: 600;
+    color: red;
 }
 
 .questions-holder {
@@ -41,6 +43,7 @@ input[type="radio"] {
     border: none;
     transition: all .25s;
     background-color: #ccc;
+    margin-top: 20px;
 }
 
 .btn:hover {
@@ -52,7 +55,8 @@ input[type="radio"] {
 }
 
 .score-holder {
-    padding: 20px;
+    padding: 10px;
+    text-align: right;
 }
 
 .score {

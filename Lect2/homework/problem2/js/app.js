@@ -160,6 +160,6 @@
 
     }
 
-    window.init = initialize;
+    window.beginPoll = initialize;
 
 })(window);

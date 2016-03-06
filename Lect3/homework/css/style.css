@@ -39,21 +39,37 @@ body {
 .main-nav li {
     display: block;
     padding: 10px 20px;
+    text-align: center;
 }
 
 .main-nav li:hover {
     background-color: #cccccc;
 }
 
-.btn {
+.menu-item {
     font-size: 24px;
+    padding: 10px 40px;
+
+}
+
+label {
+    display: block;
 }
 
 .data {
     display: inline-block;
+    text-align: center;
     width: 50%;
     margin-left: 10%;
     padding: 20px;
-    font-size: 18px;
     border: 1px solid red;
+}
+
+.countries-list li {
+    font-size: 18px;
+    padding: 10px;
+}
+
+.add-country-btn {
+    margin-top: 20px;
 }

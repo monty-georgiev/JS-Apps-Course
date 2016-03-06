@@ -8,7 +8,7 @@
         pass: 'geography123',
         showCountriesButton: '#show-countries',
         addCountryButton: '#add-country',
-        editCountries: '#edit-countries',
+        deleteCountry: '#delete-country',
         dataContainer: '#dataContainer',
         userInputCountryName: '#country-name'
     };
@@ -18,13 +18,13 @@
 
         this.$showCountriesButton = $(this.settings.showCountriesButton);
         this.$addCountryButton = $(this.settings.addCountryButton);
-        this.$editCountries = $(this.settings.editCountries);
+        this.$deleteCountry = $(this.settings.deleteCountry);
         this.$dataContainer = $(this.settings.dataContainer);
     }
 
     GeographyApp.prototype.init = function () {
         this.$showCountriesButton.on('click', $.proxy(this.getCountries, this));
-        this.$editCountries.on('click', $.proxy(this.renderEditCountries, this));
+        this.$deleteCountry.on('click', $.proxy(this.renderDeleteCountry, this));
         this.$addCountryButton.on('click', $.proxy(this.renderAddCountryView, this));
     };
 
@@ -42,6 +42,46 @@
             });
     };
 
+    GeographyApp.prototype.addCountry = function () {
+        var _this = this;
+        var countryName = $('#country-name').val();
+
+        if (countryName !== '') {
+            $.ajax({
+                    method: 'POST',
+                    url: _this.settings.baseURL + '/appdata/' + _this.settings.appID + '/Countries',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('Authorization', 'Basic ' + btoa(_this.settings.username + ':' + _this.settings.pass));
+                    },
+                    contentType: 'application/json',
+                    data: JSON.stringify({'Name': countryName})
+                }
+            ).
+                done(function () {
+                    _this.renderCountriesView;
+                });
+        }
+    };
+
+
+    GeographyApp.prototype.deleteCountry = function () {
+        var _this = this;
+        var countryName = $('#country-name').val();
+        var query = '{Name:' + countryName + ' }';
+
+        if (countryName !== '') {
+            $.ajax({
+                method: 'DELETE',
+                url: _this.settings.baseURL + '/appdata/' + _this.settings.appID + '/Countries/?query=' + query,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'Basic ' + btoa(_this.settings.username + ':' + _this.settings.pass));
+                }
+            }).done(function () {
+                _this.renderCountriesView;
+            });
+        }
+    };
+
     GeographyApp.prototype.renderAddCountryView = function () {
         var section = $('<section>')
             .addClass('add-country')
@@ -57,24 +97,6 @@
         this.$dataContainer.html(section);
     };
 
-    GeographyApp.prototype.addCountry = function () {
-        var _this = this;
-        var countryName = $('#country-name').val();
-
-        if (countryName !== '') {
-            $.ajax({
-                method: 'POST',
-                url: _this.settings.baseURL + '/appdata/' + _this.settings.appID + '/Countries',
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader('Authorization', 'Basic ' + btoa(_this.settings.username + ':' + _this.settings.pass));
-                }
-            }).done(function () {
-                _this.renderCountriesView;
-            });
-        }
-    };
-
-
     GeographyApp.prototype.renderCountriesView = function (data) {
         var countriesUl = $('<ul>').addClass('countries-list');
         for (var country in data) {
@@ -82,14 +104,26 @@
             li.text(data[country].Name);
             countriesUl.append(li);
         }
-
-        $('#dataContainer').append(countriesUl);
+        $('#dataContainer').html(countriesUl);
     };
 
-    GeographyApp.prototype.renderEditCountries = function () {
-        console.log('edit');
+    GeographyApp.prototype.renderDeleteCountry = function () {
+        console.log('render delete');
+        var section = $('<section>')
+            .addClass('add-country')
+            .append('<h3>Delete country</h3>');
+
+        var label = $('<label>Name: </label>');
+        var input = $('<input>').attr({'type': 'text', id: 'country-name'});
+        var btn = $('<button>Delete country</button>').addClass('add-country-btn').attr('id', 'delete-country');
+        btn.on('click', $.proxy(this.deleteCountry, this));
+        label.append(input);
+        section.append(label);
+        section.append(btn);
+        this.$dataContainer.html(section);
     };
 
     window.GeographyApp = GeographyApp;
 
-})(jQuery, window);
+})
+(jQuery, window);

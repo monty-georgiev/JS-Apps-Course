@@ -20,7 +20,7 @@ body {
 .main-wrapper {
     max-width: 960px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 120px 0;
 }
 
 .main-wrapper:after {
@@ -33,13 +33,14 @@ body {
     display: inline-block;
     width: 40%;
     float: left;
-    border: 1px solid black;
+    box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .main-nav li {
     display: block;
     padding: 10px 20px;
     text-align: center;
+    transition: all .35s;
 }
 
 .main-nav li:hover {
@@ -56,13 +57,14 @@ label {
     display: block;
 }
 
-.data {
+.dataContainer {
     display: inline-block;
     text-align: center;
     width: 50%;
     margin-left: 10%;
     padding: 20px;
-    border: 1px solid red;
+    box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.2);
+    min-height: 100px;
 }
 
 .countries-list li {
@@ -70,8 +72,22 @@ label {
     padding: 10px;
 }
 
-.add-country-btn {
-    margin-top: 20px;
+.change-btn {
+    display: block;
+    border: none;
+    margin: 20px auto;
+    padding: 10px;
+    cursor: pointer;
+    box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.4);
+    transition: all .25s;
+}
+
+.change-btn:hover {
+    box-shadow: none;
+}
+
+.change-btn:focus {
+    outline: 0;
 }
 
 h3 {

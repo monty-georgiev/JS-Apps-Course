@@ -56,9 +56,8 @@
                     contentType: 'application/json',
                     data: JSON.stringify({'Name': countryName})
                 }
-            ).
-                done(function () {
-                    _this.renderCountriesView;
+            ).done(function () {
+                    _this.getCountries();
                 });
         }
     };
@@ -67,7 +66,7 @@
     GeographyApp.prototype.deleteCountry = function () {
         var _this = this;
         var countryName = $('#country-name').val();
-        var query = '{Name:' + countryName + ' }';
+        var query = '{"Name":"' + countryName + '"}';
 
         if (countryName !== '') {
             $.ajax({
@@ -77,7 +76,7 @@
                     xhr.setRequestHeader('Authorization', 'Basic ' + btoa(_this.settings.username + ':' + _this.settings.pass));
                 }
             }).done(function () {
-                _this.renderCountriesView;
+                _this.getCountries();
             });
         }
     };

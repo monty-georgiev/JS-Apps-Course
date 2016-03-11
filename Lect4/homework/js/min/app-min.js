@@ -3,10 +3,9 @@
 
     var defaults = {
         baseURL: 'https://baas.kinvey.com',
-        appID: 'kid_ZkWqjeGpAl',
-        username: 'geography',
-        pass: 'geography123',
-        showBooksButton: '#show-countries',
+        appID: 'kid_bkzXL8uE1b',
+        appKey: 'a2lkX2JrelhMOHVFMWI6YWI4Mzc0OWJiNTJlNDU2YmJlMDBhMDUzOGIyMmVjMjc=',
+        showBooksButton: '#list-books',
         addBookButton: '#add-country',
         deleteBookButton: '#delete-country',
         editCountryButton: '#edit-country',
@@ -15,7 +14,7 @@
         userInputCountryName: '#country-name'
     };
 
-    function GeographyApp(options) {
+    function BookApp(options) {
         this.settings = $.extend({}, defaults, options);
 
         this.$dataContainer = $(this.settings.dataContainer);
@@ -26,7 +25,7 @@
         this.$showTowns = $(this.settings.showTownsButton);
     }
 
-    GeographyApp.prototype.init = function () {
+    BookApp.prototype.init = function () {
         var _this = this;
         this.$showCountriesButton.on('click', $.proxy(this.getCountries, this));
         this.$deleteCountry.on('click', function () {
@@ -47,13 +46,13 @@
 
     };
 
-    GeographyApp.prototype.getCountries = function () {
+    BookApp.prototype.getCountries = function () {
         var _this = this;
         $.ajax({
             method: 'GET',
-            url: _this.settings.baseURL + '/appdata/' + _this.settings.appID + '/Countries',
+            url: _this.settings.baseURL + '/appdata/' + _this.settings.appID + '/Books',
             beforeSend: function (xhr) {
-                xhr.setRequestHeader('Authorization', 'Basic ' + btoa(_this.settings.username + ':' + _this.settings.pass));
+                xhr.setRequestHeader('Authorization', 'Basic ' + _this.settings.appKey);
             }
         }).done(function (data) {
             _this.renderView('getCountries', data);
@@ -63,7 +62,7 @@
             });
     };
 
-    GeographyApp.prototype.addCountry = function () {
+    BookApp.prototype.addCountry = function () {
         var _this = this;
         var countryName = $('#country-name').val();
 
@@ -84,7 +83,7 @@
     };
 
 
-    GeographyApp.prototype.deleteCountry = function () {
+    BookApp.prototype.deleteCountry = function () {
         var _this = this;
         var countryName = $('#country-name').val();
         var query = '{"Name":"' + countryName + '"}';
@@ -103,7 +102,7 @@
     };
 
     //TODO: fix to show only selected country towns
-    GeographyApp.prototype.showTowns = function () {
+    BookApp.prototype.showTowns = function () {
         var _this = this;
         var countryName = $('#country-name').val();
         var query = '{"Name":"' + countryName + '"}';
@@ -122,10 +121,11 @@
     };
 
 
-    GeographyApp.prototype.renderView = function (type, data) {
+    BookApp.prototype.renderView = function (type, data) {
         var section, label, input, btn;
         //looks better than switch statement
         if (type === 'getCountries') {
+            console.log(data);
             $('#dataContainer').html('');
             var countriesUl = $('<ul>').addClass('countries-list');
             for (var country in data) {
@@ -214,7 +214,8 @@
     };
 
 
-    window.GeographyApp = GeographyApp;
+    window.BookApp = BookApp;
 
 })
 (jQuery, window);
+

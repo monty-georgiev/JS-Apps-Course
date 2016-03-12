@@ -1,8 +1,9 @@
 var app = app || {};
 
 
-(function(){
+(function (scope) {
 
-    console.log(app);
+    scope.requester.getCollection('Books', scope.renderView.renderAllBooksView);
 
-})();
+
+})(app);

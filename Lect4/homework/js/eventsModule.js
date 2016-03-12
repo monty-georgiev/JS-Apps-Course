@@ -6,10 +6,10 @@ var app = app || {};
     var $listAllBooksButton = $('#list-books'),
         $addBookButton = $('#add-books'),
         $editBookButton = $('#edit-book'),
-        $deleteBookButton = $('#delete-book');
+        $deleteBookButton = $('.delete-btn');
 
-    scope.requester.getCollection('Books', function (data) {
-        console.log(data)
-    });
+
+
+
 
 })(app);

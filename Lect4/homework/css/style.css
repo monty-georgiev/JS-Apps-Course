@@ -73,29 +73,22 @@ label {
     box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.countries-list li {
-    font-size: 18px;
+.book-entry {
     padding: 10px;
 }
 
-.change-btn {
-    display: block;
+.delete-btn {
+    display: inline-block;
+    margin-left: 20px;
+    padding: 10px;
+    background-color: red;
     border: none;
-    margin: 20px auto;
-    padding: 10px;
+    color: #fff;
     cursor: pointer;
-    box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.4);
-    transition: all .25s;
+    box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.5);
+    transition: all .35s;
 }
 
-.change-btn:hover {
+.delete-btn:hover {
     box-shadow: none;
-}
-
-.change-btn:focus {
-    outline: 0;
-}
-
-h3 {
-    padding: 10px;
 }

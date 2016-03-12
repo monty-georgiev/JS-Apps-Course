@@ -2,16 +2,14 @@ var app = app || {};
 
 (function (scope) {
     var _baseUrl = "https://baas.kinvey.com/appdata/kid_bkzXL8uE1b/",
-        _contentType = "application/json",
-        username = 'marto',
-        pass = '1234';
+        _contentType = 'application/json';
 
-    var makeRequest = function makeRequest(type, url, contentType, data, success, error) {
+    var makeRequest = function (type, url, contentType, data, success, error) {
         $.ajax({
             type: type,
             url: url,
             headers: {
-                'Authorization': 'Basic ' + btoa(username + ':' + pass)
+                'Authorization': 'Kinvey ' + sessionStorage.authToken
             },
             data: data || undefined,
             success: success,
@@ -19,30 +17,30 @@ var app = app || {};
         })
     };
 
-    var getCollection = function getCollection(collectionName, success, error) {
+    var getCollection = function (collectionName, success, error) {
         return makeRequest('GET', _baseUrl + collectionName, undefined, undefined, success, error);
     };
 
-    var addItemToCollection = function addItemToCollection(collectionName, data, success, error) {
+    var addItemToCollection = function (collectionName, data, success, error) {
         return makeRequest('POST', _baseUrl + collectionName, undefined, data, success, error);
     };
 
-    var deleteItemById = function deleteItemById(collectionName, id, success, error) {
+    var deleteItemById = function (collectionName, id, success, error) {
         var requestUrl = _baseUrl + collectionName + '/' + id;
         return makeRequest('DELETE', requestUrl, undefined, undefined, success, error);
     };
 
-    var getItemById = function getItemById(collectionName, id, success, error) {
+    var getItemById = function (collectionName, id, success, error) {
         var requestUrl = _baseUrl + collectionName + '/' + id;
         return makeRequest('GET', requestUrl, undefined, undefined, success, error)
     };
 
-    var editItem = function editItem(collectionName, id, data, success, error) {
+    var editItem = function (collectionName, id, data, success, error) {
         var requestUrl = _baseUrl + collectionName + '/' + id;
         return makeRequest('PUT', requestUrl, undefined, data, success, error);
     };
 
-    var getItemsByQuery = function getItemsByQuery(collectionName, queryObj, success, error) {
+    var getItemsByQuery = function (collectionName, queryObj, success, error) {
         var requestUrl = _baseUrl + collectionName + '/?query=' + JSON.stringify(queryObj);
         return makeRequest('Get', requestUrl, undefined, undefined, success, error);
     };
@@ -54,5 +52,7 @@ var app = app || {};
         editItem: editItem,
         addItemToCollection: addItemToCollection,
         getItemsByQuery: getItemsByQuery
-    }
+    };
+
+
 })(app);

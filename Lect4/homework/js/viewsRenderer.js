@@ -9,18 +9,25 @@ var app = app || {};
         for (var book in data) {
 
             var deleteButton = $('<button>')
-                .addClass('delete-btn')
+                .addClass('btn delete-btn')
                 .text('Delete').on('click', function () {
                     var questionId = $(this).closest('li').attr('data-book-id');
-                    scope.requester.deleteItemById('Books', questionId);
+                    scope.requester.deleteItemById('Books', questionId, scope.renderAllBooksView);
                 });
 
+            var editButton = $('<button>')
+                .addClass('btn edit-btn')
+                .text('Edit');
+
             var li = $('<li>')
-                .text(data[book].title)
                 .addClass('book-entry')
                 .attr('data-book-id', data[book]._id);
 
-            li.append(deleteButton);
+            var title = $('<span>').text("Title: " + data[book].title);
+            var author = $('<span>').text("Author: " + data[book].author);
+            var isbn = $('<span>').text("ISBN: " + data[book].isbn);
+
+            li.append(title, author, isbn, editButton, deleteButton);
             ul.append(li);
         }
 

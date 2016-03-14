@@ -2,12 +2,10 @@ var app = app || {};
 
 app.data = (function () {
 
-    function Data(requester) {
-        this._posts = new Posts(requester);
-        this._users = new Users(requester);
+    function Data(baseUrl, ajaxRequester) {
+        this.users = new Users(baseUrl, ajaxRequester);
+        this.posts = new Posts(baseUrl, ajaxRequester);
     }
-
-    var baseUrl = 'https://baas.kinvey.com/appdata/kid_-ka52_cuJW';
 
     var credentials = (function () {
 
@@ -31,7 +29,7 @@ app.data = (function () {
         }
 
         function setSessionToken(sessionToken) {
-            localStorage.setItem('sessionToken', sessionToken);
+            return localStorage.setItem('sessionToken', sessionToken);
         }
 
         function getUserId() {
@@ -67,76 +65,101 @@ app.data = (function () {
     });
 
     var Users = (function () {
-
-        function Users(requester) {
-            this._requester = requester;
+        function Users(baseUrl, ajaxRequester) {
+            this._serviceUrl = baseUrl;
+            this._ajaxRequester = ajaxRequester;
         }
 
-        Users.prototype.login = function () {
-            var headers = credentials.getHeaders();
+        Users.prototype.login = function (username, password) {
+            var url = this._serviceUrl + '/user/kid_-ka52_cuJW/login?username=' + username + '&password=' + password;
 
-            return app.ajaxRequester.makePostRequest(baseUrl + '/login', username, headers)
+            return this._ajaxRequester.get(url, credentials.getHeaders())
                 .then(function (data) {
-                    console.log(data);
+                    credentials.setSessionToken(data.sessionToken);
+                    credentials.setUsername(data.username);
+                    credentials.setUserId(data.objectId);
+                    return data;
                 });
         };
 
+        Users.prototype.register = function (userRegData) {
+            var url = this._serviceUrl + 'users';
 
-        Users.prototype.login = function (username) {
-
+            return this._ajaxRequester.post(url, userRegData, credentials.getHeaders())
+                .then(function (data) {
+                    return data;
+                });
         };
 
-        Users.prototype.register = function (username) {
+        Users.prototype.editProfile = function (userId, userProfileData) {
+            var url = this._serviceUrl + 'users/' + userId;
 
+            return this._ajaxRequester.put(url, userProfileData, credentials.getHeaders())
+                .then(function (data) {
+                    return data;
+                });
         };
 
-        Users.prototype.editProfile = function (username) {
+        Users.prototype.getById = function (userId) {
+            var url = this._serviceUrl + 'users/' + userId;
 
+            return this._ajaxRequester.get(url, credentials.getHeaders());
         };
 
-
-        Users.prototype.getById = function (username) {
-
+        Users.prototype.isLogged = function () {
+            return credentials.getSessionToken();
         };
 
+        Users.prototype.validateToken = function (sessionToken) {
+            var url = this._serviceUrl + 'users/me';
+            return this._ajaxRequester.get(url, credentials.getHeaders());
+        };
 
-        Users.prototype.getCurrentUserData = function (username) {
-
+        Users.prototype.getUserData = function () {
+            return {
+                userId: credentials.getUserId(),
+                username: credentials.getUsername(),
+                sessionToken: credentials.getSessionToken()
+            }
         };
 
         Users.prototype.logout = function () {
-
+            credentials.clearLocalStorage();
         };
 
         return Users;
-    });
+    }());
 
     var Posts = (function () {
-
-        function Posts(requester) {
-            this._requester = requester;
+        function Posts(baseUrl, ajaxRequester) {
+            this._serviceUrl = baseUrl + '/Posts';
+            this._ajaxRequester = ajaxRequester;
         }
-
 
         Posts.prototype.getAll = function () {
-
+            var url = this._serviceUrl + "?include=createdBy";
+            return this._ajaxRequester.get(url, credentials.getHeaders());
         };
 
-        Posts.prototype.getPostById = function () {
-
+        Posts.prototype.getById = function (objectId) {
+            return this._ajaxRequester.get(this._serviceUrl + '/' + objectId, credentials.getHeaders());
         };
 
-
-        Posts.prototype.addNewPost = function () {
-
+        Posts.prototype.add = function (post, objectOwnerId) {
+            return this._ajaxRequester.post(this._serviceUrl, post, credentials.getHeaders());
         };
 
-        return Posts
-    });
+        Posts.prototype.delete = function (objectId) {
+            var url = this._serviceUrl + '/' + objectId;
+            return this._ajaxRequester.delete(url, credentials.getHeaders());
+        };
+
+        return Posts;
+    }());
 
     return {
-        load: function (requester) {
-            return new Data(requester)
+        load: function (baseUrl, ajaxRequester) {
+            return new Data(baseUrl, ajaxRequester);
         }
     }
-});
+}());

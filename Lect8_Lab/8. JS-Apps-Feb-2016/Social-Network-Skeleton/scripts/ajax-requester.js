@@ -2,9 +2,11 @@ var app = app || {};
 
 app.ajaxRequester = (function () {
 
+    function Requester() {
+
+    }
 
     function makeRequest(method, url, data, headers) {
-
         var defer = Q.defer();
 
         $.ajax({
@@ -23,27 +25,27 @@ app.ajaxRequester = (function () {
         return defer.promise;
     }
 
-    function makeGetRequest(url, headers) {
+    Requester.prototype.makeGetRequest = function (url, headers) {
         return makeRequest('GET', url, headers)
-    }
+    };
 
-    function makePostRequest(url, data, headers) {
+    Requester.prototype.makePostRequest = function (url, data, headers) {
         return makeRequest('POST', url, data, headers)
-    }
+    };
 
-    function makePutRequest(url, data, headers) {
+    Requester.prototype.makePutRequest = function (url, data, headers) {
         return makeRequest('PUT', url, data, headers)
-    }
+    };
 
-    function makeDeleteRequest(url, data, headers) {
+    Requester.prototype.makeDeleteRequest = function (url, data, headers) {
         return makeRequest('DELETE', url, data, headers)
-    }
+    };
 
     return {
-        makeGetRequest: makeGetRequest,
-        makePostRequest: makePostRequest,
-        makePutRequest: makePutRequest,
-        makeDeleteRequest: makeDeleteRequest
+        load: function () {
+            return new Requester();
+        }
+
     };
 
 }());

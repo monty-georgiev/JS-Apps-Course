@@ -1,0 +1,6 @@
+1. create helpers, models, controllers, views folders;
+2. app.js -> namespacing app || {};
+3. helpers -> requester.js (can copy if works ok);
+4. models -> user model as easy to create;
+5. userViewbag - > create user viewbag for all model methods (loginPage, registerPage);
+6. userController ->
